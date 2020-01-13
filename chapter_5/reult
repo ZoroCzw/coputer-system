@@ -1,0 +1,68 @@
+O0
+combine1 add 100000 data 611 us
+combine1 mul 100000 data 627 us
+combine2 add 100000 data 502 us
+combine2 mul 100000 data 503 us
+combine3 add 100000 data 321 us
+combine3 mul 100000 data 315 us
+combine4 add 100000 data 325 us
+combine4 mul 100000 data 293 us
+combine1 add in 100000 data 578 us
+combine1 mul in 100000 data 662 us
+O1
+combine1 add 100000 data 301 us
+combine1 mul 100000 data 355 us
+combine2 add 100000 data 351 us
+combine2 mul 100000 data 384 us
+combine3 add 100000 data 277 us
+combine3 mul 100000 data 414 us
+combine4 add 100000 data 165 us
+combine4 mul 100000 data 205 us
+combine1 add in 100000 data 276 us
+combine1 mul in 100000 data 278 us
+
+O0
+combine1 add 100000 data 557 us
+combine1 mul 100000 data 628 us
+combine2 add 100000 data 554 us
+combine2 mul 100000 data 544 us
+combine3 add 100000 data 323 us
+combine3 mul 100000 data 314 us
+combine4 add 100000 data 325 us
+combine4 mul 100000 data 300 us
+combine1 add in 100000 data 556 us
+combine1 mul in 100000 data 555 us
+O1
+combine1 add 100000 data 260 us
+combine1 mul 100000 data 278 us
+combine2 add 100000 data 276 us
+combine2 mul 100000 data 285 us
+combine3 add 100000 data 263 us
+combine3 mul 100000 data 316 us
+combine4 add 100000 data 165 us
+combine4 mul 100000 data 236 us
+combine1 add in 100000 data 331 us
+combine1 mul in 100000 data 382 us
+
+O0
+combine1 add 100000 data 631 us
+combine1 mul 100000 data 557 us
+combine2 add 100000 data 503 us
+combine2 mul 100000 data 517 us
+combine3 add 100000 data 378 us
+combine3 mul 100000 data 367 us
+combine4 add 100000 data 401 us
+combine4 mul 100000 data 292 us
+combine1 add in 100000 data 557 us
+combine1 mul in 100000 data 575 us
+O1
+combine1 add 100000 data 272 us
+combine1 mul 100000 data 277 us
+combine2 add 100000 data 277 us
+combine2 mul 100000 data 284 us
+combine3 add 100000 data 264 us
+combine3 mul 100000 data 315 us
+combine4 add 100000 data 165 us
+combine4 mul 100000 data 206 us
+combine1 add in 100000 data 290 us
+combine1 mul in 100000 data 291 us
