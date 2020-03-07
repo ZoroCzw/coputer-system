@@ -8,7 +8,7 @@
 #define OP_ADD +
 #define OP_MUL *
 
-#define LEN 100000L
+#define LEN			10000L
 typedef long data_t;
 
 typedef struct {
@@ -54,6 +54,7 @@ data_t *get_vec_start(vec_ptr v)
 {
 	return v->data;
 }
+
 static inline void combine1_add_in(vec_ptr v, data_t *dest)
 {
 	long i;
@@ -177,6 +178,42 @@ void combine4_mul(vec_ptr v, data_t *dest)
 	*dest = acc;
 }
 
+void combine5_add(vec_ptr v, data_t *dest)
+{
+	long i;
+	long length = vec_length(v);
+	long limit = length - 1;
+	data_t *data = get_vec_start(v);
+	data_t acc = IDENT;
+
+	for (i = 0; i < limit; i++) {
+		acc = (acc OP_ADD data[i]) OP_ADD data[i + 1];
+	}
+
+	for ( ; i < length; i++) {
+		acc = acc OP_ADD data[i];
+	}
+	*dest = acc;
+}
+
+void combine5_mul(vec_ptr v, data_t *dest)
+{
+	long i;
+	long length = vec_length(v);
+	long limit = length - 1;
+	data_t *data = get_vec_start(v);
+	data_t acc = IDENT;
+
+	for (i = 0; i < limit; i++) {
+		acc = (acc OP_MUL data[i]) OP_MUL data[i + 1];
+	}
+
+	for ( ; i < length; i++) {
+		acc = acc OP_MUL data[i];
+	}
+	*dest = acc;
+}
+
 int main(int argc, char **argv)
 {
 	vec_ptr v;
@@ -251,16 +288,16 @@ int main(int argc, char **argv)
 
 		case 9:
 			begin = clock();
-			combine1_add_in(v, dest);
+			combine5_add(v, dest);
 			end = clock();	
-			printf("combine1 add in %ld data %ld us\n", LEN, (end - begin));
+			printf("combine5 add %ld data %ld us\n", LEN, (end - begin));
 			break;
-		
+
 		case 10:
 			begin = clock();
-			combine1_mul_in(v, dest);
+			combine5_mul(v, dest);
 			end = clock();	
-			printf("combine1 mul in %ld data %ld us\n", LEN, (end - begin));
+			printf("combine5 mul %ld data %ld us\n", LEN, (end - begin));
 			break;
 
 		default:
