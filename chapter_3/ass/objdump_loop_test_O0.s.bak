@@ -1,0 +1,44 @@
+
+./obj/loop_test_O0.o：     文件格式 elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <normal_for_loop>:
+   0:	55                   	push   %rbp				/* save old %rbp */
+   1:	48 89 e5             	mov    %rsp,%rbp
+   4:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%rbp)	/* i = 0 */
+   b:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%rbp)	/* j = 0 */
+  12:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%rbp)	/* i = 0 [1] */
+  19:	eb 08                	jmp    23 <normal_for_loop+0x23> /* [2] */
+  1b:	83 45 fc 01          	addl   $0x1,-0x4(%rbp)	/* if i < 9 j = j + 1 [4] */
+  1f:	83 45 f8 01          	addl   $0x1,-0x8(%rbp)  /* i = i + 1 [5] */
+  23:	83 7d f8 09          	cmpl   $0x9,-0x8(%rbp)	/* compare i 9 [3] */
+  27:	7e f2                	jle    1b <normal_for_loop+0x1b>
+  29:	8b 45 fc             	mov    -0x4(%rbp),%eax	/* %eax = j */
+  2c:	5d                   	pop    %rbp				/* restore %rbp */
+  2d:	c3                   	retq   
+
+000000000000002e <dead_for_loop>:
+  2e:	55                   	push   %rbp				/* save old %rbp */
+  2f:	48 89 e5             	mov    %rsp,%rbp
+  32:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%rbp) /* j = 0 */
+  39:	83 45 fc 01          	addl   $0x1,-0x4(%rbp) /* j = j + 1 */
+  3d:	eb fa                	jmp    39 <dead_for_loop+0xb>
+
+000000000000003f <main>:
+  3f:	55                   	push   %rbp				/* save old %rbp */
+  40:	48 89 e5             	mov    %rsp,%rbp		/* update current %rbp*/
+  43:	48 83 ec 10          	sub    $0x10,%rsp		/* %rsp = %rsp - 16 */
+  47:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%rbp)  /* j = 0 */
+  4e:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%rbp)	/* k = 0 */
+  55:	b8 00 00 00 00       	mov    $0x0,%eax		/* %eax = 0 */
+  5a:	e8 00 00 00 00       	callq  5f <main+0x20>	/* call normal_for_loop */
+  5f:	89 45 f8             	mov    %eax,-0x8(%rbp)	/* j = %eax*/
+  62:	e8 00 00 00 00       	callq  67 <main+0x28>	/* call dead_loop */
+  67:	89 45 fc             	mov    %eax,-0x4(%rbp)	/**/
+  6a:	8b 55 f8             	mov    -0x8(%rbp),%edx
+  6d:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  70:	01 d0                	add    %edx,%eax
+  72:	c9                   	leaveq 
+  73:	c3                   	retq   
