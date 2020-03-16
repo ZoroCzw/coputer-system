@@ -7,15 +7,11 @@ int cmov_test(int a)
 
 int jump_test(int a)
 {
-	int b = 0;
 	if (a) {
-		b = a + 1;
-		printf("%d", b);
+		return a + 1;
 	} else {
-		b = a - 1;
+		return a - 1;
 	}
-
-	return b;
 }
 
 int main()

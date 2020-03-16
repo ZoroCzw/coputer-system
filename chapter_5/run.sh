@@ -1,12 +1,14 @@
-while ((1))
-do
-echo "O0"
-for ((i = 1; i < 11; i++)) {
-	./bin/combine_O0 $i
-}
+./bin/optimization_O1 0 10000
+./bin/optimization_O1 1 10000
 
-echo "O1"
-for ((i = 1; i < 11; i++)) {
-	./bin/combine_O1 $i
-}
-done
+./bin/optimization_O1 0 100000
+./bin/optimization_O1 1 100000
+
+./bin/optimization_O1 0 10000000
+./bin/optimization_O1 1 10000000
+
+./bin/optimization_O1 0 100000000
+./bin/optimization_O1 1 100000000
+
+./bin/optimization_O1 0 1000000000
+./bin/optimization_O1 1 1000000000

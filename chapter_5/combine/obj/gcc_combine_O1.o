@@ -1,0 +1,142 @@
+	.file	"combine.c"
+	.text
+	.type	combine1, @function
+combine1:
+.LFB56:
+	.cfi_startproc
+	movq	$1, (%rsi)
+	cmpq	$0, (%rdi)
+	jle	.L1
+	movl	$0, %eax
+	jmp	.L6
+.L3:
+	testl	%edx, %edx
+	jne	.L4
+	movq	%r8, %rcx
+	addq	(%rsi), %rcx
+.L5:
+	movq	%rcx, (%rsi)
+	addq	$1, %rax
+	cmpq	(%rdi), %rax
+	jge	.L1
+.L6:
+	testq	%rax, %rax
+	js	.L3
+	movq	8(%rdi), %rcx
+	movq	(%rcx,%rax,8), %r8
+	jmp	.L3
+.L4:
+	movq	%r8, %rcx
+	imulq	(%rsi), %rcx
+	jmp	.L5
+.L1:
+	rep ret
+	.cfi_endproc
+.LFE56:
+	.size	combine1, .-combine1
+	.type	new_vec, @function
+new_vec:
+.LFB52:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	pushq	%rbx
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 32
+	movq	%rdi, %rbp
+	movl	$16, %edi
+	call	malloc@PLT
+	movq	%rax, %rbx
+	testq	%rax, %rax
+	je	.L8
+	movq	%rbp, (%rax)
+	movl	$0, %eax
+	testq	%rbp, %rbp
+	jg	.L13
+.L10:
+	movq	%rax, 8(%rbx)
+.L8:
+	movq	%rbx, %rax
+	addq	$8, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 24
+	popq	%rbx
+	.cfi_def_cfa_offset 16
+	popq	%rbp
+	.cfi_def_cfa_offset 8
+	ret
+.L13:
+	.cfi_restore_state
+	movl	$8, %esi
+	movq	%rbp, %rdi
+	call	calloc@PLT
+	testq	%rax, %rax
+	jne	.L10
+	movq	%rbx, %rdi
+	call	free@PLT
+	movl	$0, %ebx
+	jmp	.L8
+	.cfi_endproc
+.LFE52:
+	.size	new_vec, .-new_vec
+	.type	combine2, @function
+combine2:
+.LFB57:
+	.cfi_startproc
+	movq	(%rdi), %r9
+	movq	$1, (%rsi)
+	testq	%r9, %r9
+	jle	.L14
+	movl	$0, %eax
+	jmp	.L19
+.L16:
+	testl	%edx, %edx
+	jne	.L17
+	movq	%r8, %rcx
+	addq	(%rsi), %rcx
+.L18:
+	movq	%rcx, (%rsi)
+	addq	$1, %rax
+	cmpq	%r9, %rax
+	je	.L14
+.L19:
+	testq	%rax, %rax
+	js	.L16
+	cmpq	%rax, (%rdi)
+	jle	.L16
+	movq	8(%rdi), %rcx
+	movq	(%rcx,%rax,8), %r8
+	jmp	.L16
+.L17:
+	movq	%r8, %rcx
+	imulq	(%rsi), %rcx
+	jmp	.L18
+.L14:
+	rep ret
+	.cfi_endproc
+.LFE57:
+	.size	combine2, .-combine2
+	.globl	init_combine
+	.type	init_combine, @function
+init_combine:
+.LFB58:
+	.cfi_startproc
+	leaq	combine_ops(%rip), %rax
+	movq	%rax, 8(%rdi)
+	ret
+	.cfi_endproc
+.LFE58:
+	.size	init_combine, .-init_combine
+	.section	.data.rel.local,"aw",@progbits
+	.align 16
+	.type	combine_ops, @object
+	.size	combine_ops, 24
+combine_ops:
+	.quad	new_vec
+	.quad	combine1
+	.quad	combine2
+	.ident	"GCC: (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0"
+	.section	.note.GNU-stack,"",@progbits

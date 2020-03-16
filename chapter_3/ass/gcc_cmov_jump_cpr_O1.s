@@ -13,36 +13,16 @@ cmov_test:
 	.cfi_endproc
 .LFE23:
 	.size	cmov_test, .-cmov_test
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.LC0:
-	.string	"%d"
-	.text
 	.globl	jump_test
 	.type	jump_test, @function
 jump_test:
 .LFB24:
 	.cfi_startproc
-	pushq	%rbx
-	.cfi_def_cfa_offset 16
-	.cfi_offset 3, -16
-	movl	$-1, %ebx
+	leal	1(%rdi), %eax
 	testl	%edi, %edi
-	jne	.L8
-.L4:
-	movl	%ebx, %eax
-	popq	%rbx
-	.cfi_remember_state
-	.cfi_def_cfa_offset 8
+	movl	$-1, %edx
+	cmove	%edx, %eax
 	ret
-.L8:
-	.cfi_restore_state
-	leal	1(%rdi), %ebx
-	movl	%ebx, %edx
-	leaq	.LC0(%rip), %rsi
-	movl	$1, %edi
-	movl	$0, %eax
-	call	__printf_chk@PLT
-	jmp	.L4
 	.cfi_endproc
 .LFE24:
 	.size	jump_test, .-jump_test
